@@ -3,8 +3,14 @@
 {% block title %}Homepage{% endblock %}
 
 {% block body %}
-<a href="register">Register</a>
-<br>
-<a href="login">Log in</a>
-<a href="account">Personnal Account</a>
+
+{% if is_granted('ROLE_USER') %}
+    <a href="account">Personnal Account</a>
+    <a href="logout">LOGOUT</a>
+{% elseif not is_granted('ROLE_USER') %}
+    <a href="register">Register</a>
+    <br>
+    <a href="login">Log in</a>
+{% endif %}
+
 {% endblock %}

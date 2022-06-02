@@ -89,6 +89,15 @@
     "nikic/php-parser": {
         "version": "v4.14.0"
     },
+    "paragonie/constant_time_encoding": {
+        "version": "v2.5.0"
+    },
+    "paragonie/random_compat": {
+        "version": "v9.99.100"
+    },
+    "php-amqplib/php-amqplib": {
+        "version": "v3.2.0"
+    },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
     },
@@ -97,6 +106,9 @@
     },
     "phpdocumentor/type-resolver": {
         "version": "1.6.1"
+    },
+    "phpseclib/phpseclib": {
+        "version": "3.0.14"
     },
     "phpstan/phpdoc-parser": {
         "version": "1.5.1"

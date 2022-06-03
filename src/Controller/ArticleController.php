@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\ArticleRepository;
 
 class ArticleController extends AbstractController
 {
@@ -41,6 +42,13 @@ class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/article/{slug}', name: 'page-article')]
-    function show()
+    #[Route('/article/{id}', name: 'page-article')]
+    function show(int $id, ArticleRepository $articleRep): Response
+    {
+        $article = $articleRep->findOneBy(['id' => $id]);
+        // dd($article);
+        return $this->render('article/page-article.html.twig', [
+            'article' => $article,
+        ]);
+    }
 }

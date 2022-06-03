@@ -10,7 +10,7 @@ use App\Repository\UserRepository;
 class AccountController extends AbstractController
 {
     #[Route('/account', name: 'account')]
-    public function index(UserRepository $ur): Response
+    public function index(): Response
     {
         $user = $this->getUser();
         $userArticles = $user->getArticles();

@@ -20,6 +20,8 @@
                 <small>By {{article.author}}</small>
             </div>
             <p>{{ article.articleContent|slice(0, 8) }}...</p>
+            <br>
+            <a href="{{path('page-article', {id: article.id})}}">Show full article</a>
             <small>{{ article.articleCreatedAt|format_datetime('medium', 'short') }}</small>
         </div>
        

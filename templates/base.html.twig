@@ -16,18 +16,18 @@
     <body>
     <a href="{{path('homepage')}}"><h1>MicroBlog</h1></a>
     {% if is_granted('ROLE_USER') %}
-    <a href="logout">LOGOUT</a>
+    <a href="{{path('logout')}}">LOGOUT</a>
     <br>
-    <a href="account">Personnal Account</a>
+    <a href="{{path('account')}}">Personnal Account</a>
     <br>
-    <a href="article">Write an article</a>
+    <a href="{{path('article')}}">Write an article</a>
     <br>
-    <a href="journal">Journal</a>
+    <a href="{{path('journal')}}">Journal</a>
     
     {% elseif not is_granted('ROLE_USER') %}
-        <a href="register">Register</a>
+        <a href="{{path('register')}}">Register</a>
         <br>
-        <a href="login">Log in</a>
+        <a href="{{path('login')}}">Log in</a>
     {% endif %}
     <hr>
         {% block body %}{% endblock %}

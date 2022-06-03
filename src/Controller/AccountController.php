@@ -13,10 +13,10 @@ class AccountController extends AbstractController
     public function index(UserRepository $ur): Response
     {
         $user = $this->getUser();
-        // dd($user);
         $userArticles = $user->getArticles();
         // dd($userArticles);
-        return $this->render('account/index.html.twig', [
+        // dd($userArticles);
+        return $this->render('account/account.html.twig', [
             'user' => $user,
             'articles' => $userArticles,
         ]);

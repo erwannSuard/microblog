@@ -32,10 +32,15 @@ class ArticleController extends AbstractController
             $article->setAuthor($user);
             $this->entityManager->persist($article);
             $this->entityManager->flush();
+            dd();
+            return $this->redirectToRoute('homepage');
         }
 
     return $this->renderForm('article/add-article.html.twig', [
             'form' => $form,
         ]);
     }
+
+    #[Route('/article/{slug}', name: 'page-article')]
+    function show()
 }

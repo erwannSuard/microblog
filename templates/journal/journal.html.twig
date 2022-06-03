@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello JournalController!{% endblock %}
+
+{% block body %}
+
+
+    <h1>Notre Journal</h1>
+
+    {% for article in articlesFull %}
+        <div style="background-color: lightgrey; margin: 40px; padding: 10px; border: solid black 4px; width: 60%;">
+            <div style="border: solid grey 2px; background-color: white;">
+                <p style="font-weight: bold; font-size: 2em; text-align: center;">{{ article.title }}</p>
+                <small>By {{article.author}}</small>
+            </div>
+            <p>{{ article.articleContent }}</p>
+            <small>{{ article.articleCreatedAt|format_datetime('medium', 'short') }}</small>
+        </div>
+       
+    {% endfor %}
+
+    {% if previous >=0 %}
+        <a href="{{ path('journal', {offset: previous}) }}">Previous</a>
+    {% endif %}
+
+    {% if next < articlesFull|length %}
+        <a href="{{ path('journal', {offset: next}) }}">Next</a>
+    {% endif %}
+    
+{% endblock %}

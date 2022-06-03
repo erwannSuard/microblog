@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ user.username }}{% endblock %}
+
+{% block body %}
+
+
+    <h1>{{ user.username }}</h1>
+
+    Welcome to your microblog account
+
+    {% if articles|length is same as (0) %}
+        <h3>You wrote no articles yet</h3>
+    {% else %}
+    <h3>Your articles : </h3>
+    {% for article in articles %}
+        <div style="background-color: lightgrey; margin: 40px; padding: 10px; border: solid black 4px; width: 60%;">
+            <div style="border: solid grey 2px; background-color: white;">
+                <p style="font-weight: bold; font-size: 2em; text-align: center;">{{ article.title }}</p>
+                <small>By {{article.author}}</small>
+            </div>
+            <p>{{ article.articleContent|slice(0, 8) }}...</p>
+            <small>{{ article.articleCreatedAt|format_datetime('medium', 'short') }}</small>
+        </div>
+       
+    {% endfor %}
+    {% endif %}
+    
+{% endblock %}

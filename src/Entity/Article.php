@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Article
 {
     #[ORM\Id]
@@ -34,6 +35,11 @@ class Article
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->title;
     }
 
     public function getId(): ?int
@@ -70,9 +76,10 @@ class Article
         return $this->articleCreatedAt;
     }
 
-    public function setArticleCreatedAt(\DateTimeImmutable $articleCreatedAt): self
+    #[ORM\PrePersist]
+    public function setArticleCreatedAt(): self
     {
-        $this->articleCreatedAt = $articleCreatedAt;
+        $this->articleCreatedAt = new \DateTimeImmutable();
 
         return $this;
     }

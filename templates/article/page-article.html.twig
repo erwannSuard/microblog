@@ -3,5 +3,21 @@
 {% block title %}{{ article.title }}{% endblock %}
 
 {% block body %}
-<h1>{{ article.title }}</h1>
+<div style="background-color: lightgrey; margin: 40px; padding: 10px; border: solid black 4px; width: 60%;">
+            <div style="border: solid grey 2px; background-color: white;">
+                <p style="font-weight: bold; font-size: 2em; text-align: center;">{{ article.title }}</p>
+                <small>By {{article.author}}</small>
+            </div>
+            <p>{{ article.articleContent}}</p>
+            <br>
+            <small>{{ article.articleCreatedAt|format_datetime('medium', 'short') }}</small>
+        </div>
+<div>
+<ul>
+{% for comment in comments %}
+    <li><small>{{ comment.commentContent }}</small></li>
+{% endfor %}
+</ul>
+    {{ form(form) }}
+</div>
 {% endblock %}

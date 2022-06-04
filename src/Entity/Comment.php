@@ -6,6 +6,7 @@ use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Comment
 {
     #[ORM\Id]
@@ -36,9 +37,10 @@ class Comment
         return $this->commentCreatedAt;
     }
 
-    public function setCommentCreatedAt(\DateTimeImmutable $commentCreatedAt): self
+    #[ORM\PrePersist]
+    public function setCommentCreatedAt(): self
     {
-        $this->commentCreatedAt = $commentCreatedAt;
+        $this->commentCreatedAt = new \DateTimeImmutable();
 
         return $this;
     }

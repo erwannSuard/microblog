@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Article;
 use App\Form\ArticleType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -10,6 +11,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ArticleRepository;
+use App\Form\CommentType;
+use App\Repository\CommentRepository;
 
 class ArticleController extends AbstractController
 {
@@ -33,7 +36,6 @@ class ArticleController extends AbstractController
             $article->setAuthor($user);
             $this->entityManager->persist($article);
             $this->entityManager->flush();
-            dd();
             return $this->redirectToRoute('homepage');
         }
 
@@ -42,13 +44,40 @@ class ArticleController extends AbstractController
         ]);
     }
 
+
     #[Route('/article/{id}', name: 'page-article')]
-    function show(int $id, ArticleRepository $articleRep): Response
+    function show(int $id, ArticleRepository $articleRep, CommentRepository $commentRep, Request $request): Response
     {
+        //Affichage de l'article par ID
         $article = $articleRep->findOneBy(['id' => $id]);
-        // dd($article);
-        return $this->render('article/page-article.html.twig', [
+        //On trouve les commentaires
+        $comments = $commentRep->findBy(['article' => $id]);
+        // dd($comments);
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $comment = $form->getData();
+            $user = $this->getUser();
+            $comment->setAuthor($user);
+            $comment->setArticle($article);
+            $this->entityManager->persist($comment);
+            // dd($comment);
+            $this->entityManager->flush();
+            //Nouveau commentaire 
+            $comments = $commentRep->findBy(['article' => $id]);
+            unset($form);
+            unset($comment);
+            $comment = new Comment();
+            $form = $this->createForm(CommentType::class, $comment); 
+            $this->redirect($this->generateUrl('page-article', array('id' => $id)));
+        }
+        return $this->renderForm('article/page-article.html.twig', [
             'article' => $article,
+            'form' => $form,
+            'comments' => $comments,
         ]);
     }
 }

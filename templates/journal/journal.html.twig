@@ -13,7 +13,10 @@
                 <p style="font-weight: bold; font-size: 2em; text-align: center;">{{ article.title }}</p>
                 <small>By {{article.author}}</small>
             </div>
-            <p>{{ article.articleContent }}</p>
+            <p>{{ article.articleContent|slice(0, 35) }}...</p>
+            
+            <a href="{{path('page-article', {id: article.id})}}">Show full article</a>
+            <br>
             <small>{{ article.articleCreatedAt|format_datetime('medium', 'short') }}</small>
         </div>
        

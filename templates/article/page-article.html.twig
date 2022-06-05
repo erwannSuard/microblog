@@ -3,21 +3,43 @@
 {% block title %}{{ article.title }}{% endblock %}
 
 {% block body %}
-<div style="background-color: lightgrey; margin: 40px; padding: 10px; border: solid black 4px; width: 60%;">
+{# <div style="display: flex;"> #}
+<div style="display: flex; justify-content: center;">
+
+    <div style="background-color: lightgrey; margin: 40px; padding: 10px; border: solid black 4px; width: 100%;">
             <div style="border: solid grey 2px; background-color: white;">
                 <p style="font-weight: bold; font-size: 2em; text-align: center;">{{ article.title }}</p>
                 <small>By {{article.author}}</small>
             </div>
-            <p>{{ article.articleContent}}</p>
-            <br>
-            <small>{{ article.articleCreatedAt|format_datetime('medium', 'short') }}</small>
-        </div>
-<div>
-<ul>
-{% for comment in comments %}
-    <li><small>{{ comment.commentContent }}</small></li>
-{% endfor %}
-</ul>
-    {{ form(form) }}
+                <p>{{ article.articleContent}}</p>
+                <br>
+                <small>{{ article.articleCreatedAt|format_datetime('medium', 'short') }}</small>
+    </div>
 </div>
+
+<div style="display: flex;">
+    {# COMMENTS #}
+    <div style="magrgin-top: 40px; padding: 10px; margin-left: 40px; width: 50%;">
+        
+        {% for comment in comments %}
+            <fieldset>
+            <legend><small><strong>{{ comment.author }}</strong> commented on : <i>{{ comment.commentCreatedAt|format_datetime('medium', 'short') }}</i></small></legend>
+                <p>{{ comment.commentContent }}</p>
+            </fieldset>
+            
+        {% endfor %}
+
+        {% if previous >= 0 %}
+           <a href="{{ path('page-article', { id: article.id, offset: previous }) }}">Previous</a>
+        {% endif %}
+        {% if next < comments|length %}
+            <a href="{{ path('page-article', { id: article.id, offset: next }) }}">Next</a>
+        {% endif %}
+        
+    </div>
+
+</div>
+{# </div> #}
+{{ form(form) }}
+
 {% endblock %}

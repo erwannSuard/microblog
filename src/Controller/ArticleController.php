@@ -48,10 +48,15 @@ class ArticleController extends AbstractController
     #[Route('/article/{id}', name: 'page-article')]
     function show(int $id, ArticleRepository $articleRep, CommentRepository $commentRep, Request $request): Response
     {
+
+        
         //Affichage de l'article par ID
         $article = $articleRep->findOneBy(['id' => $id]);
+        $offset = max(0, $request->query->getInt('offset', 0));
         //On trouve les commentaires
-        $comments = $commentRep->findBy(['article' => $id]);
+        $paginator = $commentRep->getCommentPaginator($article, $offset);
+        // //On trouve les commentaires
+        // $comments = $commentRep->findBy(['article' => $id]);
         // dd($comments);
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
@@ -77,7 +82,9 @@ class ArticleController extends AbstractController
         return $this->renderForm('article/page-article.html.twig', [
             'article' => $article,
             'form' => $form,
-            'comments' => $comments,
+            'comments' => $paginator,
+            'previous' => $offset - CommentRepository::COMMENT_PER_PAGE,
+            'next' => min(count($paginator), $offset + CommentRepository::COMMENT_PER_PAGE),
         ]);
     }
 }

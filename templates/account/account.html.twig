@@ -27,6 +27,13 @@
         </div>
        
     {% endfor %}
+    {% if previous >=0 %}
+        <a href="{{ path('account', {offset: previous}) }}">Previous</a>
+    {% endif %}
+
+    {% if next < articles|length %}
+        <a href="{{ path('account', {offset: next}) }}">Next</a>
+    {% endif %}
     {% endif %}
     
 {% endblock %}

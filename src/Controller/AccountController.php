@@ -2,23 +2,27 @@
 
 namespace App\Controller;
 
+use App\Repository\ArticleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\UserRepository;
+use Symfony\Component\HttpFoundation\Request;
 
 class AccountController extends AbstractController
 {
     #[Route('/account', name: 'account')]
-    public function index(): Response
+    public function index(Request $request, ArticleRepository $articleRep): Response
     {
         $user = $this->getUser();
-        $userArticles = $user->getArticles();
-        // dd($userArticles);
-        // dd($userArticles);
+         // $articlesFull = $articleRep->findAll();
+         $offset = max(0, $request->query->getInt('offset', 0));
+         $paginator = $articleRep->getArticleByAuthorPaginator($offset, $user);
+         
         return $this->render('account/account.html.twig', [
             'user' => $user,
-            'articles' => $userArticles,
+            'articles' => $paginator,
+            'previous' => $offset - ArticleRepository::ARTICLE_PER_PAGE,
+            'next' => min(count($paginator), $offset + ArticleRepository::ARTICLE_PER_PAGE),
         ]);
     }
 }

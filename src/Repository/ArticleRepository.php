@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use App\Entity\Article;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -33,7 +34,20 @@ class ArticleRepository extends ServiceEntityRepository
 
         return new Paginator($query);
     }
+//_____________________________________________________________________________________________________________________________________
+    public function getArticleByAuthorPaginator(int $offset, User $user): Paginator
+    {
+        $query = $this->createQueryBuilder('c')
+            ->andWhere('c.author = :user')
+            ->setParameter('user', $user)
+            ->orderBy('c.articleCreatedAt', 'DESC')
+            ->setMaxResults(self::ARTICLE_PER_PAGE)
+            ->setFirstResult($offset)
+            ->getQuery();
 
+        return new Paginator($query);
+    }
+//_____________________________________________________________________________________________________________________________________
     public function add(Article $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);

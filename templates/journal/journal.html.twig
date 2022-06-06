@@ -9,10 +9,12 @@
 
     {% for article in articlesFull %}
         <div style="background-color: lightgrey; margin: 40px; padding: 10px; border: solid black 4px; width: 60%;">
-            <div style="border: solid grey 2px; background-color: white;">
-                <p style="font-weight: bold; font-size: 2em; text-align: center;">{{ article.title }}</p>
-                <small>By {{article.author}}</small>
-            </div>
+            <a href="{{ path('blog', {username: article.author}) }}">
+                <div style="border: solid grey 2px; background-color: white;">
+                    <p style="font-weight: bold; font-size: 2em; text-align: center;">{{ article.title }}</p>
+                    <small>By {{article.author}}</small>
+                </div>
+            </a>
             <p>{{ article.articleContent|slice(0, 35) }}...</p>
             
             <a href="{{path('page-article', {id: article.id})}}">Show full article</a>

@@ -29,7 +29,7 @@ class CommentRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('c')
             ->andWhere('c.article = :article')
             ->setParameter('article', $article)
-            ->orderBy('c.commentCreatedAt', 'DESC')
+            ->orderBy('c.commentCreatedAt', 'ASC')
             ->setMaxResults(self::COMMENT_PER_PAGE)
             ->setFirstResult($offset)
             ->getQuery()

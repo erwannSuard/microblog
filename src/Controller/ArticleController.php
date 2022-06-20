@@ -55,9 +55,6 @@ class ArticleController extends AbstractController
         $offset = max(0, $request->query->getInt('offset', 0));
         //On trouve les commentaires
         $paginator = $commentRep->getCommentPaginator($article, $offset);
-        // //On trouve les commentaires
-        // $comments = $commentRep->findBy(['article' => $id]);
-        // dd($comments);
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
@@ -69,10 +66,8 @@ class ArticleController extends AbstractController
             $comment->setAuthor($user);
             $comment->setArticle($article);
             $this->entityManager->persist($comment);
-            // dd($comment);
             $this->entityManager->flush();
             //Nouveau commentaire 
-            $comments = $commentRep->findBy(['article' => $id]);
             unset($form);
             unset($comment);
             $comment = new Comment();

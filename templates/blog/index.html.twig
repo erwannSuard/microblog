@@ -3,5 +3,38 @@
 {% block title %}{{user.username}}'s page{% endblock %}
 
 {% block body %}
-<h1>WELCOME ON {{user.username}}'s page</h1>
+{% if checkFollow %}
+    <h4>✔️​ Followed</h4>
+{% else %}
+    <a href="{{ path('blog-follow', {username: user.username}) }}"><button>Follow {{user.username}}</button></a>
+{% endif %}
+{% if checkFollowedBy %}
+    <h4>✔️​ Follows you</h4>
+{% else %}
+    <h4>❌​​ Does not follow you yet</h4>
+{% endif %}
+<h2>{{user.username}}</h2>
+{% for article in articles %}
+        <div style="background-color: lightgrey; margin: 40px; padding: 10px; border: solid black 4px; width: 60%;">
+            <div style="border: solid grey 2px; background-color: white;">
+                <p style="font-weight: bold; font-size: 2em; text-align: center;">{{ article.title }}</p>
+                <small>By {{article.author}}</small>
+            </div>
+            <p>{{ article.articleContent|slice(0, 35) }}...</p>
+            
+            <a href="{{path('page-article', {id: article.id})}}">Show full article</a>
+            <br>
+            <small>{{ article.articleCreatedAt|format_datetime('medium', 'short') }}</small>
+        </div>
+       
+    {% endfor %}
+    {% if previous >=0 %}
+        <a href="{{ path('blog', {offset: previous}) }}">Previous</a>
+    {% endif %}
+
+    {% if next < articles|length %}
+        <a href="{{ path('blog', {offset: next}) }}">Next</a>
+    {% endif %}
+
+
 {% endblock %}

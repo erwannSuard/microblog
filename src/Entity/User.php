@@ -35,18 +35,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Comment::class)]
     private $comments;
 
-    #[ORM\ManyToMany(targetEntity: self::class, inversedBy: 'follewedBy')]
+    #[ORM\ManyToMany(targetEntity: self::class, inversedBy: 'followedBy')]
     private $follows;
 
     #[ORM\ManyToMany(targetEntity: self::class, mappedBy: 'follows')]
-    private $follewedBy;
+    private $followedBy;
 
     public function __construct()
     {
         $this->articles = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->follows = new ArrayCollection();
-        $this->follewedBy = new ArrayCollection();
+        $this->followedBy = new ArrayCollection();
     }
 
     public function __toString()
@@ -192,16 +192,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->follows;
     }
 
-    public function addFollow(self $follow): self
+    public function addFollows(self $follow): self
     {
         if (!$this->follows->contains($follow)) {
             $this->follows[] = $follow;
         }
+       
 
         return $this;
     }
 
-    public function removeFollow(self $follow): self
+    public function removeFollows(self $follow): self
     {
         $this->follows->removeElement($follow);
 
@@ -211,25 +212,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, self>
      */
-    public function getFollewedBy(): Collection
+    public function getFollowedBy(): Collection
     {
-        return $this->follewedBy;
+        return $this->followedBy;
     }
 
-    public function addFollewedBy(self $follewedBy): self
+    public function addFollowedBy(self $followedBy): self
     {
-        if (!$this->follewedBy->contains($follewedBy)) {
-            $this->follewedBy[] = $follewedBy;
-            $follewedBy->addFollow($this);
+        if (!$this->followedBy->contains($followedBy)) {
+            $this->followedBy[] = $followedBy;
+            $followedBy->addFollows($this);
         }
 
         return $this;
     }
 
-    public function removeFollewedBy(self $follewedBy): self
+    public function removeFollowedBy(self $followedBy): self
     {
-        if ($this->follewedBy->removeElement($follewedBy)) {
-            $follewedBy->removeFollow($this);
+        if ($this->followedBy->removeElement($followedBy)) {
+            $followedBy->removeFollows($this);
         }
 
         return $this;

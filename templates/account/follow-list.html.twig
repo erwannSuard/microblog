@@ -4,10 +4,12 @@
 
 {% block body %}
 
+<h2>You're following</h2>
 <ul>
     {% for follow in follows %}
      <li>{{follow.username}}  ||  <a href="{{ path('blog-follow', {username: follow.username}) }}"><button>Visit Blog</button> </a></li>
-      
     {% endfor %}
 </ul>
+
+<a href="{{ path('account')}}"><button>Back on your Profile</button> </a>
 {% endblock %}

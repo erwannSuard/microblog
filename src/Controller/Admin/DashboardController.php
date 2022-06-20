@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 use App\Entity\Comment;
 use App\Entity\Article;
+use App\Entity\Tag;
 
 use App\Controller\Admin\ArticleCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -50,5 +51,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToRoute('Back to MicroBlog', 'fas fa-home', 'homepage');
         yield MenuItem::linkToCrud('Article', 'fas fa-map-marker-alt', Article::class);
         yield MenuItem::linkToCrud('Comment', 'fas fa-comments', Comment::class);
+        yield MenuItem::linkToCrud('Tag', '	fas fa-asterisk', Tag::class);
     }
 }

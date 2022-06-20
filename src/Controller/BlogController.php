@@ -22,8 +22,11 @@ class BlogController extends AbstractController
     #[Route('/blog/{username}', name: 'blog')]
     public function index(UserRepository $userRep, ArticleRepository $articleRep , string $username, Request $request): Response
     {
+        // Utilisateur Connecté
         $currentUser = $this->getUser();
+        // Utilisateur du profil visité
         $user = $userRep->findOneBy(['username' => $username]);
+        //Vérification if follows ou followed by
         $checkFollow = false;
         $checkFollowedBy = false;
         $offset = max(0, $request->query->getInt('offset', 0));

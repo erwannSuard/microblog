@@ -25,4 +25,19 @@ class AccountController extends AbstractController
             'next' => min(count($paginator), $offset + ArticleRepository::ARTICLE_PER_PAGE),
         ]);
     }
+
+    #[Route('/account/follow-list', name: 'account-follow-list')]
+    public function followList(): Response
+    {
+        $user = $this->getUser();
+        $followers = $user->getFollowedBy();
+        $follows = $user->getFollows();
+        // dd($follows);
+         
+        return $this->render('account/follow-list.html.twig', [
+            'user' => $user,
+            'follows' => $follows,
+            'followers' => $followers,
+        ]);
+    }
 }

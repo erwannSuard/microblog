@@ -4,7 +4,7 @@
 
 {% block body %}
 {% if checkFollow %}
-    <h4>✔️​ Followed</h4>
+    <h4>✔️​ You are following {{user.username}}</h4>
 {% else %}
     <a href="{{ path('blog-follow', {username: user.username}) }}"><button>Follow {{user.username}}</button></a>
 {% endif %}
@@ -29,11 +29,11 @@
        
     {% endfor %}
     {% if previous >=0 %}
-        <a href="{{ path('blog', {offset: previous}) }}">Previous</a>
+        <a href="{{ path('blog', {offset: previous, username: user.username}) }}">Previous</a>
     {% endif %}
 
     {% if next < articles|length %}
-        <a href="{{ path('blog', {offset: next}) }}">Next</a>
+        <a href="{{ path('blog', {offset: next, username: user.username}) }}">Next</a>
     {% endif %}
 
 

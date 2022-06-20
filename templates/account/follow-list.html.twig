@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ user.username }} Follow List{% endblock %}
+
+{% block body %}
+
+<ul>
+    {% for follow in follows %}
+     <li>{{follow.username}}  ||  <a href="{{ path('blog-follow', {username: follow.username}) }}"><button>Visit Blog</button> </a></li>
+      
+    {% endfor %}
+</ul>
+{% endblock %}

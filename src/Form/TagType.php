@@ -13,7 +13,6 @@ class TagType extends AbstractType
     {
         $builder
             ->add('tagName')
-            ->add('articles')
         ;
     }
 

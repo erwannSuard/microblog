@@ -15,6 +15,15 @@
                     <small>By {{article.author}}</small>
                 </div>
             </a>
+            {% if article.tags|length is same as(0) %}
+               <h5>Untagged</h5>
+            {% else %}
+                <h5>Tags : 
+                    {% for tag in article.tags %}
+                        #{{tag}}  
+                    {% endfor %}
+                </h5>
+            {% endif %}
             <p>{{ article.articleContent|slice(0, 35) }}...</p>
             
             <a href="{{path('page-article', {id: article.id})}}">Show full article</a>

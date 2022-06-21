@@ -16,6 +16,7 @@ class JournalController extends AbstractController
         // $articlesFull = $articleRep->findAll();
         $offset = max(0, $request->query->getInt('offset', 0));
         $paginator = $articleRep->getArticlePaginator($offset);
+        // dd($articleRep->findAll());
         return $this->render('journal/journal.html.twig', [
             // 'articlesFull' => $articlesFull,
             'articlesFull' => $paginator,

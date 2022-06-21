@@ -3,5 +3,13 @@
 {% block title %}Write an article{% endblock %}
 
 {% block body %}
-{{ form(form) }}
+{# {{ form(form) }} #}
+<div style="width: 40%">
+{{ form_start(form) }}
+{{ form_row(form.title) }}
+{{ form_row(form.articleContent,{ 'attr': {'cols': '100', 'rows': '25'}}) }}
+{{ form_row(form.tags) }}
+{{ form_row(form.save) }}
+{{ form_end(form) }}
+</div>
 {% endblock %}

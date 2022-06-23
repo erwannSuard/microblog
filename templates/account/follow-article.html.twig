@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ user.username }} Follow Articles{% endblock %}
+
+{% block body %}
+
+<a href="{{ path('account')}}"><button>Back on your Profile</button> </a>
+<h2>Article of accounts you're following</h2>
+
+{% for article in articles %}
+ 
+ <a href="{{ path('blog', {username: article.author}) }}"><h3>-{{article.title}} : {{article.author}}</h3></a> <br>
+
+{% endfor %}
+
+
+{% endblock %}

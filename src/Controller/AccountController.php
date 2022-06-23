@@ -40,4 +40,44 @@ class AccountController extends AbstractController
             'followers' => $followers,
         ]);
     }
+
+    #[Route('/account/follow-articles', name: 'account-follow-articles')]
+    public function followArticles(): Response
+    {
+        $user = $this->getUser();
+        $follows = $user->getFollows();
+        $followArticles = [];
+        
+        foreach($follows as $follower){
+            $articles = $follower->getArticles();
+            
+            foreach($articles as $article){
+                array_push($followArticles, $article);
+            }
+            // $followArticles += $follower->get
+        }
+        // dd($followArticles);
+         
+        return $this->render('account/follow-article.html.twig', [
+            'user' => $user,
+            'follows' => $follows,
+            'articles' => $followArticles,
+        ]);
+    }
+
+        #[Route('/account/your-articles', name: 'account-your-articles')]
+    public function yourArticles(Request $request, ArticleRepository $articleRep): Response
+    {
+        $user = $this->getUser();
+        // $articlesFull = $articleRep->findAll();
+        $offset = max(0, $request->query->getInt('offset', 0));
+        $paginator = $articleRep->getArticleByAuthorPaginator($offset, $user);
+         
+        return $this->render('account/account-your-articles.html.twig', [
+            'user' => $user,
+            'articles' => $paginator,
+            'previous' => $offset - ArticleRepository::ARTICLE_PER_PAGE,
+            'next' => min(count($paginator), $offset + ArticleRepository::ARTICLE_PER_PAGE),
+        ]);
+    }
 }

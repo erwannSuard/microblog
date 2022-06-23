@@ -44,7 +44,7 @@ class BlogController extends AbstractController
         {
             return $this->redirectToRoute('account');
         }
-        return $this->render('blog/index.html.twig', [
+        return $this->render('blog/blog.html.twig', [
             'user' => $user,
             'checkFollow' => $checkFollow,
             'checkFollowedBy' => $checkFollowedBy,

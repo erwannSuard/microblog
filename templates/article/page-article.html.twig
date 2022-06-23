@@ -22,7 +22,7 @@
                     {% endfor %}
                 </h5>
             {% endif %}
-            <p>{{ article.articleContent}}</p>
+            <p>{{ article.articleContent|trans|nl2br}}</p>
             <br>
             <small>{{ article.articleCreatedAt|format_datetime('medium', 'short') }}</small>
             

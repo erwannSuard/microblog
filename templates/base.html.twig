@@ -14,11 +14,42 @@
         {% endblock %}
     </head>
     <body>
+
+
     <style>
-    a{
-        
+    p{
+        font: 1.2em "Fira Sans", sans-serif;
     }
+
+    a{
+        color:#0b0317;
+        text-decoration: none;
+        font: small-caps bold 24px/1 sans-serif;
+    }
+    /* unvisited link */
+    {# a:link {
+        color: black;
+    }
+
+    /* visited link */
+    a:visited {
+        color: black;
+    } #}
+
+    /* mouse over link */
+    a:hover {
+        color: #2f3030;
+    }
+
+    {# /* selected link */
+    a:active {
+        color: black;
+    } #}
+    
     </style>
+
+
+
     <a href="{{path('homepage')}}"><h1>MicroBlog</h1></a>
     {% if is_granted('ROLE_USER') %}
     <a href="{{path('logout')}}">LOGOUT</a>

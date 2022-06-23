@@ -7,10 +7,11 @@
 
     <h1>{{ user.username }}</h1>
 
-    Welcome to your microblog account
+    <p>Welcome to your microblog account</p>
     <a href="{{path('account-follow-list')}}"><button>Following list</button></a>
     <a href="{{path('account-follow-articles')}}"><button>Your feed</button></a> {# à faire #}
     <a href="{{path('account-your-articles')}}"><button>Your articles</button></a>
+    <a href="{{path('account-messages')}}"><button>Your message box</button></a>
 
     
 {% endblock %}

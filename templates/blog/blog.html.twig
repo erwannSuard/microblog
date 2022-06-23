@@ -3,6 +3,7 @@
 {% block title %}{{user.username}}'s page{% endblock %}
 
 {% block body %}
+{# CHECK SI SUIVI OU SUIVI PAR #}
 {% if checkFollow %}
     <h4>✔️​ You are following {{user.username}}</h4>
 {% else %}
@@ -13,6 +14,14 @@
 {% else %}
     <h4>❌​​ Does not follow you yet</h4>
 {% endif %}
+<a href="{{ path('account')}}"><button>Back on your Profile</button> </a>
+
+{# ENVOI DE MESSAGE #}
+{% if checkFollow and checkFollowedBy %}
+    <a href="{{ path('message', {username: user.username}) }}"><button>Send a message to {{user.username}}</button></a> 
+{% endif %}
+
+{# LES ARTICLES DE L'USER #}
 <h2>{{user.username}}</h2>
 {% for article in articles %}
         <div style="background-color: lightgrey; margin: 40px; padding: 10px; border: solid black 4px; width: 60%;">

@@ -8,8 +8,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
+
+
 class AccountController extends AbstractController
 {
+
+
+
+    //------------------------- Page principale account user -----------------------------
     #[Route('/account', name: 'account')]
     public function index(Request $request, ArticleRepository $articleRep): Response
     {
@@ -26,6 +32,11 @@ class AccountController extends AbstractController
         ]);
     }
 
+
+
+
+
+    //------------------------- Liste follow par l'user -----------------------------
     #[Route('/account/follow-list', name: 'account-follow-list')]
     public function followList(): Response
     {
@@ -41,6 +52,21 @@ class AccountController extends AbstractController
         ]);
     }
 
+
+
+
+
+
+    //------------------------- Articles des followed par l'user -----------------------------
+    //---------------------------------------------
+    //---------------------------------------------
+    //---------------------------------------------
+    //---------------------------------------------
+    //-------------- À AMELIORER !!!!!!!!!!! ------
+    //---------------------------------------------
+    //---------------------------------------------
+    //---------------------------------------------
+    //---------------------------------------------
     #[Route('/account/follow-articles', name: 'account-follow-articles')]
     public function followArticles(): Response
     {
@@ -65,7 +91,12 @@ class AccountController extends AbstractController
         ]);
     }
 
-        #[Route('/account/your-articles', name: 'account-your-articles')]
+
+
+
+
+    //------------------------- Articles de l'user -----------------------------
+    #[Route('/account/your-articles', name: 'account-your-articles')]
     public function yourArticles(Request $request, ArticleRepository $articleRep): Response
     {
         $user = $this->getUser();
@@ -78,6 +109,28 @@ class AccountController extends AbstractController
             'articles' => $paginator,
             'previous' => $offset - ArticleRepository::ARTICLE_PER_PAGE,
             'next' => min(count($paginator), $offset + ArticleRepository::ARTICLE_PER_PAGE),
+        ]);
+    }
+
+
+
+
+
+    //------------------------- Boite reception de l'user -----------------------------
+    #[Route('/account/messages', name: 'account-messages')]
+    public function yourMessages(): Response
+    {
+        $user = $this->getUser();
+        $messages = $user->getMessagesReceived();
+        dd($messages);
+        $offset = max(0, $request->query->getInt('offset', 0));
+        $paginator = $articleRep->getArticleByAuthorPaginator($offset, $user);
+         
+        return $this->render('account/account-your-articles.html.twig', [
+            'user' => $user,
+            // 'articles' => $paginator,
+            // 'previous' => $offset - ArticleRepository::ARTICLE_PER_PAGE,
+            // 'next' => min(count($paginator), $offset + ArticleRepository::ARTICLE_PER_PAGE),
         ]);
     }
 }

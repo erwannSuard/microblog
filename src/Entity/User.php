@@ -41,12 +41,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: self::class, mappedBy: 'follows')]
     private $followedBy;
 
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: PrivateMessage::class)]
+    private $messagesSent;
+
+    #[ORM\OneToMany(mappedBy: 'receiver', targetEntity: PrivateMessage::class)]
+    private $messagesReceived;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->follows = new ArrayCollection();
         $this->followedBy = new ArrayCollection();
+        $this->messagesSent = new ArrayCollection();
+        $this->messagesReceived = new ArrayCollection();
     }
 
     public function __toString()
@@ -231,6 +239,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->followedBy->removeElement($followedBy)) {
             $followedBy->removeFollows($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PrivateMessage>
+     */
+    public function getMessagesSent(): Collection
+    {
+        return $this->messagesSent;
+    }
+
+    public function addMessagesSent(PrivateMessage $messagesSent): self
+    {
+        if (!$this->messagesSent->contains($messagesSent)) {
+            $this->messagesSent[] = $messagesSent;
+            $messagesSent->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessagesSent(PrivateMessage $messagesSent): self
+    {
+        if ($this->messagesSent->removeElement($messagesSent)) {
+            // set the owning side to null (unless already changed)
+            if ($messagesSent->getAuthor() === $this) {
+                $messagesSent->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PrivateMessage>
+     */
+    public function getMessagesReceived(): Collection
+    {
+        return $this->messagesReceived;
+    }
+
+    public function addMessagesReceived(PrivateMessage $messagesReceived): self
+    {
+        if (!$this->messagesReceived->contains($messagesReceived)) {
+            $this->messagesReceived[] = $messagesReceived;
+            $messagesReceived->setReceiver($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessagesReceived(PrivateMessage $messagesReceived): self
+    {
+        if ($this->messagesReceived->removeElement($messagesReceived)) {
+            // set the owning side to null (unless already changed)
+            if ($messagesReceived->getReceiver() === $this) {
+                $messagesReceived->setReceiver(null);
+            }
         }
 
         return $this;

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Private message creation{% endblock %}
+
+{% block body %}
+{# Formulaire message #}
+{{ form_start(form) }}
+
+    {{ form_row(form.title) }}
+    {{ form_row(form.content) }}
+<button type="submit" class="btn">Send Message</button>
+{{ form_end(form) }}
+{% endblock %}

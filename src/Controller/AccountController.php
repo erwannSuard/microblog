@@ -140,7 +140,6 @@ class AccountController extends AbstractController
         {
             //Affichage du message par slug
             $message = $messageRep->findOneBy(['slug' => $slug]);
-            // dd($slug);
             return $this->render('account/message-page.html.twig', [
                 'message' => $message,
             ]);

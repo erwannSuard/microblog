@@ -5,3 +5,42 @@ body {
 .cache {
     display: none;
 }
+
+p{
+    font: 1.2em "Fira Sans", sans-serif;
+}
+
+a{
+    color:#0b0317;
+    text-decoration: none;
+    font: small-caps bold 24px/1 sans-serif;
+}
+
+
+table {
+    border: solid black 2px; border-collapse: collapse;
+}
+thead {
+    font-size: 2rem; margin: 1rem;
+}
+th {
+    padding: 15px; border: solid black 2px; border-collapse: collapse;
+}
+td {
+    padding: 10px; border: solid black 2px; border-collapse: collapse;
+}
+
+.discussion{
+    display: flex;
+    align-items: center;
+    border: black solid 10px;
+    flex-direction: column;
+}
+.originalMessage {
+    padding: 15px;
+    display: inline-flex;
+    align-items: center;
+    flex-direction: column;
+    border: white solid 3px;
+    background-color: whitesmoke;
+}

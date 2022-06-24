@@ -8,11 +8,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\PrivateMessageRepository;
-
+use Doctrine\ORM\EntityManagerInterface;
 
 class AccountController extends AbstractController
 {
-
 
 
     //------------------------- Page principale account user -----------------------------
@@ -144,4 +143,22 @@ class AccountController extends AbstractController
                 'message' => $message,
             ]);
         }
+
+        //------------------------- Switch read du message ------------------------- 
+        #[Route('/account/message/read/{slug}', name: 'account-message-page-switch')]
+        public function messageRead(EntityManagerInterface $em, PrivateMessageRepository $messageRep, string $slug): Response
+        {
+            //Affichage du message par slug
+            $message = $messageRep->findOneBy(['slug' => $slug]);
+            if($message->isIsRead() == false){
+                $message->setIsRead(true);
+                $em->persist($message);
+                $em->flush();
+            }
+
+            return $this->redirectToRoute('account-message-page', [
+                'slug' => $slug,
+            ]);
+        }
 }
+

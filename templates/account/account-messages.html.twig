@@ -25,7 +25,12 @@
                 <td>
                     <a href="{{ path('blog', {username: message.author}) }}"><p>{{message.author}}</p></a>
                 </td>
-                <td><a href="{{ path('account-message-page', {slug: message.slug}) }}"><p>{{message.title}}</p></a></td>
+                {% if message.isRead is same as true %}
+                    <td><a href="{{ path('account-message-page', {slug: message.slug}) }}"><p>​​{{message.title}}</p></a></td>
+                {% else %}
+                    <td><a href="{{ path('account-message-page-switch', {slug: message.slug}) }}"><p>{{message.title}}📧​</p></a></td>
+                {% endif %}
+                
             </tr>
         {% endfor %}
     </tbody>

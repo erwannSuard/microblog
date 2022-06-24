@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ user.username }} message box{% endblock %}
+
+{% block body %}
+
+
+<table>
+    <thead>
+        <tr>
+            <th colspan="2">{{ user.username }} message box</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            <td>Sender</td>
+            <td>Subject</td>
+        </tr>
+
+        {% for message in messages %}
+            <tr>
+                <td>
+                    <a href="{{ path('blog', {username: message.author}) }}"><p>{{message.author}}</p></a>
+                </td>
+                <td><a href=""><p>{{message.title}}</p></a></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+    
+{% endblock %}

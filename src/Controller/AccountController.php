@@ -121,13 +121,12 @@ class AccountController extends AbstractController
     public function yourMessages(): Response
     {
         $user = $this->getUser();
-        $messages = $user->getMessagesReceived();
-        dd($messages);
-        $offset = max(0, $request->query->getInt('offset', 0));
-        $paginator = $articleRep->getArticleByAuthorPaginator($offset, $user);
+        $messages = $user->getMessagesReceived(); //Penser à un paginator pour les messages
+        
          
-        return $this->render('account/account-your-articles.html.twig', [
+        return $this->render('account/account-messages.html.twig', [
             'user' => $user,
+            'messages' => $messages
             // 'articles' => $paginator,
             // 'previous' => $offset - ArticleRepository::ARTICLE_PER_PAGE,
             // 'next' => min(count($paginator), $offset + ArticleRepository::ARTICLE_PER_PAGE),

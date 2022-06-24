@@ -47,6 +47,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'receiver', targetEntity: PrivateMessage::class)]
     private $messagesReceived;
 
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: MessageResponse::class)]
+    private $messageResponses;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -55,6 +58,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->followedBy = new ArrayCollection();
         $this->messagesSent = new ArrayCollection();
         $this->messagesReceived = new ArrayCollection();
+        $this->messageResponses = new ArrayCollection();
     }
 
     public function __toString()
@@ -298,6 +302,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($messagesReceived->getReceiver() === $this) {
                 $messagesReceived->setReceiver(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, MessageResponse>
+     */
+    public function getMessageResponses(): Collection
+    {
+        return $this->messageResponses;
+    }
+
+    public function addMessageResponse(MessageResponse $messageResponse): self
+    {
+        if (!$this->messageResponses->contains($messageResponse)) {
+            $this->messageResponses[] = $messageResponse;
+            $messageResponse->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessageResponse(MessageResponse $messageResponse): self
+    {
+        if ($this->messageResponses->removeElement($messageResponse)) {
+            // set the owning side to null (unless already changed)
+            if ($messageResponse->getAuthor() === $this) {
+                $messageResponse->setAuthor(null);
             }
         }
 

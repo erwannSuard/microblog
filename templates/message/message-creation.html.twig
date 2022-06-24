@@ -5,7 +5,7 @@
 {% block body %}
 {# Formulaire message #}
 {{ form_start(form) }}
-
+<p>Send a message to {{receiver}}</p>
     {{ form_row(form.title) }}
     {{ form_row(form.content) }}
 <button type="submit" class="btn">Send Message</button>

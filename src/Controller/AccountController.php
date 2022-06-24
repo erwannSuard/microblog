@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-
+use App\Repository\PrivateMessageRepository;
 
 
 class AccountController extends AbstractController
@@ -132,4 +132,17 @@ class AccountController extends AbstractController
             // 'next' => min(count($paginator), $offset + ArticleRepository::ARTICLE_PER_PAGE),
         ]);
     }
+
+
+        //------------------------- Affichage du message ------------------------- 
+        #[Route('/account/message/{slug}', name: 'account-message-page')]
+        public function messageDisplay(PrivateMessageRepository $messageRep, string $slug): Response
+        {
+            //Affichage du message par slug
+            $message = $messageRep->findOneBy(['slug' => $slug]);
+            // dd($slug);
+            return $this->render('account/message-page.html.twig', [
+                'message' => $message,
+            ]);
+        }
 }

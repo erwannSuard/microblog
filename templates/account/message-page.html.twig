@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ message.title }}{% endblock %}
+
+{% block body %}
+
+
+    <h1>{{ message.title }}</h1>
+
+    <p>{{message.content}}</p>
+
+    <small>Sent by {{message.author}} on {{message.createdAt|format_datetime('medium', 'short')}}</small>
+
+    
+{% endblock %}

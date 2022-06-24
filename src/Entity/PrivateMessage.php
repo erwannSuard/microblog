@@ -39,6 +39,9 @@ class PrivateMessage
     #[ORM\OneToMany(mappedBy: 'originalMessage', targetEntity: MessageResponse::class, orphanRemoval: true)]
     private $messageResponses;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private $slug;
+
     public function __construct()
     {
         $this->messageResponses = new ArrayCollection();
@@ -148,6 +151,18 @@ class PrivateMessage
                 $messageResponse->setOriginalMessage(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

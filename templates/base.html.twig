@@ -14,17 +14,30 @@
         {% endblock %}
     </head>
     <body>
-
+    <style>
+    .navBarCo {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        /* flex-wrap: wrap; */
+    }  
+    .navBarLink{
+        display: block;
+    }
+    </style>
     <a href="{{path('homepage')}}"><h1>MicroBlog</h1></a>
     {% if is_granted('ROLE_USER') %}
-    <a href="{{path('logout')}}">LOGOUT</a>
-    <br>
-    <a href="{{path('account')}}">Personnal Account</a>
-    <br>
-    <a href="{{path('article')}}">Write an article</a>
-    <br>
-    <a href="{{path('journal')}}">Journal</a>
-    
+    <div class="navBarCo">
+        
+        <a class="navBarLink" href="{{path('logout')}}">LOGOUT</a>
+        
+        <a class="navBarLink" href="{{path('account')}}">Personnal Account</a>
+        
+        <a class="navBarLink" href="{{path('article')}}">Write an article</a>
+        
+        <a class="navBarLink" href="{{path('journal')}}">Journal</a>
+
+    </div>
     {% elseif not is_granted('ROLE_USER') %}
         <a href="{{path('register')}}">Register</a>
         <br>
@@ -33,4 +46,5 @@
     <hr>
         {% block body %}{% endblock %}
     </body>
+
 </html>

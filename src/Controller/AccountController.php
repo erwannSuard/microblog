@@ -42,12 +42,26 @@ class AccountController extends AbstractController
         $user = $this->getUser();
         $followers = $user->getFollowedBy();
         $follows = $user->getFollows();
-        // dd($follows);
+        // Une array pour les followers qui ne sont pas follow back
+        $followersLeft = [];
+        
+        foreach($followers as $follower)
+        {
+            $followCheck = false;
+            foreach($follows as $following){
+                if($follower == $following){
+                    $followCheck = true;
+                }
+            }
+            if($followCheck == false){
+                array_push($followersLeft, $follower);
+            }
+        }
          
         return $this->render('account/follow-list.html.twig', [
             'user' => $user,
             'follows' => $follows,
-            'followers' => $followers,
+            'followers' => $followersLeft,
         ]);
     }
 

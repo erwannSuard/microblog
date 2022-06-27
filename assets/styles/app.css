@@ -44,3 +44,11 @@ td {
     border: white solid 3px;
     background-color: whitesmoke;
 }
+
+/* .navBarCo {
+    display: flex;
+    flex-direction: row;
+    align-content: space-between;
+    /* flex-wrap: wrap; */
+/*}  
+ */

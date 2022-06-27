@@ -10,3 +10,13 @@ import './styles/app.css';
 
 // start the Stimulus application
 import './bootstrap';
+
+
+var followersList = document.getElementById('followers');
+var followersButton = document.getElementById('followersButton');
+
+const toggleCache = () => {
+    followersList.classList.toggle('cache');
+    console.log('click');
+}
+followersButton.addEventListener('click', toggleCache);

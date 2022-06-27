@@ -4,12 +4,30 @@
 
 {% block body %}
 
+{# Script show users à follow back #}
+
+
+
+
+
+<div class="followDiv">
 <h2>You're following</h2>
 <ul>
     {% for follow in follows %}
      <li>{{follow.username}}  ||  <a href="{{ path('blog-follow', {username: follow.username}) }}"><button>Visit Blog</button> </a></li>
     {% endfor %}
 </ul>
+</div>
 
+{# FOLLOWED BY #}
+<div id="followers" class="cache">
+    <ul>
+    {% for follow in followers %}
+     <li>{{follow.username}}  ||  <a href="{{ path('blog-follow', {username: follow.username}) }}"><button>Visit Blog and follow back</button> </a></li>
+    {% endfor %}
+    </ul>
+</div>
+<button id="followersButton">Show users you don't follow back yet</button>
 <a href="{{ path('account')}}"><button>Back on your Profile</button> </a>
 {% endblock %}
+
